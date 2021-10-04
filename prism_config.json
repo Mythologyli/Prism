@@ -1,0 +1,26 @@
+{
+    "level": "DEBUG",
+    "shell": {
+        "start_cmd": "./start.sh",
+        "stop_cmd": "stop",
+        "read_encoding": "utf-8",
+        "write_encoding": "utf-8"
+    },
+    "api": {
+        "address": "127.0.0.1",
+        "port": 8520,
+        "tag": "rpg_server"
+    },
+    "webhook": {
+        "url": "http://example.com:8080/",
+        "tag": "rpg_server",
+        "event": {
+            "ServerStart": true,
+            "ServerStop": true,
+            "PlayerJoin": true,
+            "PlayerQuit": true,
+            "PlayerChat": true,
+            "PlayerAdvancement": true
+        }
+    }
+}
