@@ -46,7 +46,7 @@ class Webhook:
 
             if data['data']['type'] not in self.allow_event_list:
                 logger.log('WEBHOOK', f'Webhook for this event is disabled.')
-                return
+                continue
 
             try:
                 async with aiohttp.ClientSession() as session:
