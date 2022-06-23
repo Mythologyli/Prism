@@ -90,14 +90,18 @@ class Shell:
             await self.run_flag.wait()
             await asyncio.sleep(0)
 
+            line = await self.line_queue.get()
+            self.line_queue.put_nowait(line)
+
             async with self.line_queue_get_lock:
                 try:
                     line = self.line_queue.get_nowait()
                 except asyncio.QueueEmpty:
+                    await asyncio.sleep(0)
                     continue
 
-                for func in self.line_handler:
-                    func(line)
+            for func in self.line_handler:
+                func(line)
 
     async def temp_get_lines(self, num: int = 1) -> list:
         '''

@@ -58,6 +58,16 @@ class PlayerAdvancementEvent(BaseEvent):
         self.type: str = 'PlayerAdvancement'
         self.player: str
         self.advancement: str
+        
+
+class PlayerDeathEvent(BaseEvent):
+
+    def __init__(self) -> None:
+        self.time = int(time.time())
+        self.type: str = 'PlayerDeath'
+        self.player: str
+        self.message: str
+        self.level: int
 
 
 class Event:
@@ -110,6 +120,15 @@ class Event:
             event.player = res[0]
             res = re.findall("has[\s\S]*\[(.*?)]", line)
             event.advancement = res[0]
+            self._save_event(event)
+            return
+
+        if line.find("EVENT|DEAD|") != -1:
+            res = line.split('|')
+            event = PlayerDeathEvent()
+            event.player = res[2]
+            event.message = res[3]
+            event.level = res[4]
             self._save_event(event)
             return
 
